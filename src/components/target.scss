@@ -1,0 +1,431 @@
+@mixin flex($ai) {
+  display: flex !important;
+  align-items: $ai;
+}
+
+@mixin front($content, $pos, $bg) {
+  content: $content;
+  position: $pos;
+  background: $bg;
+}
+
+$purple: #494bbf;
+
+// 内容区
+.ObjectiveCard {
+  background: #fff;
+  border: 1px solid #ebecf0;
+  border-radius: 4px;
+  box-shadow: 0 8px 8px 0 rgba(235, 236, 240, 0.2);
+  margin-bottom: 24px;
+
+  // 目标名称
+  .obj_input {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    border: 1px solid transparent; // 透明
+    border-bottom-color: #ebecf0;
+
+    .obj_input_cont {
+      flex: 1;
+      @include flex(flex-start);
+      position: relative;
+      margin-left: 24px;
+
+      .i-icon-target {
+        position: absolute;
+        height: 16px;
+        left: -24px;
+        top: 10px;
+        bottom: 6;
+      }
+
+      .obj_input_content {
+        font-size: 14px;
+        color: #333;
+        margin: 12px 16px;
+        min-width: 480px;
+        width: calc(100vw - 620px);
+        padding: 1px 0;
+        border: 0 !important;
+        box-shadow: none !important;
+        border-radius: 4px;
+        line-height: 20px;
+        word-break: unset;
+        outline: none;
+        background-color: transparent;
+        resize: none;
+        overflow: hidden;
+        text-align: justify;
+        word-break: break-all;
+      }
+    }
+
+    .score {
+      max-width: 100px;
+      margin-left: 16px;
+      color: #333;
+    }
+  }
+
+  // 输入框聚焦态
+  .focus-input {
+    border-radius: 4px;
+    border-color: $purple !important;
+  }
+
+  // 指标部分
+  .KeyResult {
+    position: relative;
+    border: 1px solid transparent;
+
+    &::after {
+      @include front('', absolute, #ebecf0);
+      left: 40px;
+      right: 16px;
+      bottom: 0;
+      height: 1px;
+    }
+
+    .key_res_info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      min-height: 48px;
+      padding: 0 16px 0 40px;
+
+      &::before {
+        @include front('', absolute, $purple);
+        width: 6px;
+        height: 6px;
+        top: 24px;
+        left: 40px;
+        transform: translateY(-50%);
+        border-radius: 50%;
+
+        .ant-input {
+          font-size: 14px;
+          color: #333;
+          margin: 12px 16px;
+          min-width: 480px;
+          width: calc(100vw - 620px);
+          padding: 1px 0;
+          border: 0 !important;
+          box-shadow: none !important;
+          line-height: 20px;
+        }
+      }
+
+      .key_res_order {
+        @include flex(flex-start);
+
+        .key_res_order_allow {
+          color: #333;
+          cursor: pointer;
+        }
+
+        .key_res_order_not {
+          color: gray;
+          cursor: not-allowed;
+        }
+
+        .i-icon {
+          margin-left: 16px;
+          line-height: 1;
+        }
+      }
+
+      .key_res_act {
+        @include flex(center);
+
+        &>div {
+          cursor: pointer;
+
+          .i-icon {
+            height: 16px;
+            line-height: 0;
+          }
+
+          &:hover {
+            span {
+              color: $purple !important;
+            }
+          }
+        }
+
+        // 删除
+        .key_res_del {
+          display: none;
+          color: #aeafb2;
+        }
+
+        // 权重
+        .key_res_weight {
+          margin-left: 32px;
+          width: 100px;
+          font-size: 16px;
+          color: #aeafb2;
+          height: 22px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          border-radius: 4px;
+
+          span {
+            &:last-child {
+              color: #333;
+            }
+          }
+        }
+
+        // 评分
+        .key_res_score {
+          margin-right: -12px;
+          border-radius: 4px;
+          font-size: 16px;
+          height: 22px;
+          display: flex;
+          align-items: center;
+          font-weight: 400;
+
+          .score_input {
+            height: 32px;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            position: relative;
+            border-radius: 4px;
+
+            .ant-input-number {
+              width: 48px;
+              min-width: 48px;
+              // padding: 0 12px;
+              height: 100%;
+              text-align: right;
+              color: #333;
+
+              .ant-input-number-handler-wrap {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &:hover {
+      background: #f9f9f9;
+
+      .key_res_del {
+        @include flex(center);
+        color: $purple;
+      }
+
+      .score_input {
+        border: 1px solid hsla(0, 0%, 80%, 0.7) !important;
+      }
+    }
+  }
+
+  // 进展
+  .ObjectProgress {
+    border-bottom: 1px solid #ebecf0;
+    margin: 0 16px 0 40px;
+    padding: 14px 0 12px;
+
+    .progress_header {
+      @include flex(center);
+      font: weight 500px;
+      font-size: 14px;
+      margin-bottom: 5px;
+      height: 20px;
+      justify-content: flex-start;
+
+      .i-icon {
+        height: 16px;
+        line-height: 1;
+        margin-right: 8px;
+      }
+    }
+
+    pre {
+      margin-top: 8px;
+      margin-bottom: 4px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: normal;
+      word-break: break-all;
+      white-space: break-spaces;
+    }
+  }
+
+  // 操作部分
+  .ObjectActions {
+    margin: 0 24px 0 40px;
+    height: 56px;
+    @include flex(center);
+
+    .ant-btn {
+      margin-right: 12px;
+      border: 1px solid hsla(0, 0%, 80%, 0.7);
+      border-radius: 4px;
+      background-color: #fff;
+      display: inline-flex;
+      align-items: center;
+
+      &:hover {
+        color: rgba(0, 0, 0, 0.25);
+        background-color: hsla(0, 0%, 80%, 0.1);
+      }
+
+      .i-icon {
+        height: 16px;
+        line-height: 1;
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+// 弹窗
+.ant-modal-content {
+  min-height: 244px;
+  padding-bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px !important;
+
+  .ant-modal-header {
+    @include flex(center);
+    justify-content: space-between;
+    padding: 18px 32px !important;
+    flex-shrink: 0;
+    height: 64px;
+    border-radius: 8px;
+    border-bottom: 0;
+
+    .ant-modal-title {
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 500;
+      color: #333;
+    }
+  }
+
+  .ant-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px 32px;
+    border-top: none;
+
+    .ant-btn {
+      height: 40px;
+      min-width: 88px;
+      max-width: 88px;
+      border-radius: 4px;
+      padding: 0 16px;
+      border: 1px solid hsla(0, 0%, 80%, 0.7);
+      color: rgba(0, 0, 0, 0.85);
+
+      &:hover {
+        background: hsla(0, 0%, 80%, 0.1);
+      }
+    }
+
+    .ant-btn-primary {
+      background: $purple;
+      color: #fff;
+
+      &:hover {
+        background: rgba(73, 75, 191, 0.85);
+      }
+    }
+  }
+
+  .ant-modal-body {
+    .weight_header {
+      height: 30px;
+      display: flex;
+      align-content: flex-start;
+      justify-content: space-between;
+      margin-bottom: 6px;
+
+      .weight_header_title {
+        font-size: 20px;
+        color: #333;
+        font-weight: 500;
+        line-height: 28px;
+      }
+
+      .weight_header_power {
+        .i-icon {
+          margin-right: 8px;
+          line-height: 1;
+        }
+
+        @include flex(center);
+        font-size: 20px;
+        background-image: linear-gradient(#ebecf0, #ebecf0),
+        linear-gradient(#494bbf, #494bbf);
+        background-size: 100% 2px,
+        0 2px;
+        background-position: 100% 100%,
+        0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 0.2s ease;
+
+        &:focus-within {
+          background-size: 0 2px, 100% 2px !important;
+        }
+
+        .weight_header_power_input {
+          border: none !important;
+          box-shadow: none !important;
+          flex: 1 1;
+          height: inherit;
+          @include flex(center);
+          position: relative;
+          border-radius: 4px;
+          border: 1px solid hsla(0, 0%, 80%, 0.7);
+
+          .ant-input {
+            height: 28px;
+            font-size: 20px;
+            line-height: 28px;
+            padding: 0;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            ime-mode: disabled;
+            width: 52px;
+            min-width: 52px;
+          }
+        }
+
+        .input_power {
+          z-index: -1;
+          opacity: 0;
+          position: absolute;
+          visibility: hidden;
+          white-space: pre;
+        }
+      }
+    }
+
+    .weight_content {
+      border: 1px solid #ebecf0;
+      background-color: #f9f9f9;
+      line-height: 20px;
+      border-radius: 4px;
+      padding: 8px 12px;
+      color: #333;
+      text-align: justify;
+      font-size: 14px;
+    }
+  }
+}

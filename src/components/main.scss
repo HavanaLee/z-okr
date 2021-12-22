@@ -104,36 +104,52 @@
 
       // button
       .add_btn {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        border: 1px solid hsla(0, 0%, 80%, 0.7);
+        justify-content: flex-start;
         border-style: dashed;
-        background-color: #fff !important;
         color: #333;
         font-size: 14px;
         height: 56px;
         min-height: 56px;
         max-height: 56px;
         border-radius: 4px;
-        padding: 0 16px;
+        display: flex;
+        width: 100%;
+        border: 1px dashed hsla(0, 0%, 80%, .7);
+        background-color: #fff;
+        align-items: center;
         min-width: 88px;
-        outline: none;
+        padding: 0 16px;
+        transition: background-color .3s, border-color .3s;
+        cursor: pointer;
+
+        .add_obj_subtitle {
+          color: #999;
+          margin-left: 24px;
+        }
 
         &:hover {
           background-color: hsla(0, 0%, 80%, 0.1) !important;
           border-style: solid;
 
-          .i-icon {
-            color: #aeafb2;
+          .icon-plus {
+            color: #494bbf;
           }
         }
 
-        .i-icon {
+        .icon-plus {
           margin-right: 4px;
           font-size: 16px;
-          height: 16px;
-          line-height: 1;
+          display: inline-block;
+          color: inherit;
+          font-style: normal;
+          line-height: 0;
+          text-align: center;
+          text-transform: none;
+          vertical-align: -.125em;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          color: #aeafb2;
         }
       }
     }

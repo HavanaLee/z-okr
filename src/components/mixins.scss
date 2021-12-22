@@ -1,0 +1,135 @@
+@mixin line-limit($line) {
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+@mixin k-text-overflow($width) {
+  max-width: $width;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin scrollbar {
+  /** for firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--GY03), 0.5);
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--GY03), 0.5);
+    border-radius: 3px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--GY03), 0.7);
+  }
+}
+
+@mixin noscrollbar {
+  /** for firefox */
+  scrollbar-width: none;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 2px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+  }
+}
+
+@mixin placeholder-color {
+  color: rgba(#999, 0.7);
+}
+
+@mixin disabled-bg {
+  background: #fafafa;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder,
+  &::-moz-placeholder,
+  &::-ms-input-placeholder {
+    font-weight: normal;
+    opacity: 0.7;
+    color:red;
+  }
+}
+
+@mixin translateX($x: 0) {
+  transform: translateX($x);
+}
+
+@mixin translateY($y: 0) {
+  transform: translateY($y);
+}
+
+@mixin k-v-center() {
+  top: 50%;
+  @include translateY(-50%);
+}
+
+@mixin k-h-center() {
+  left: 50%;
+  @include translateX(-50%);
+}
+
+/** 如果自定义字体不存在，会走后面的字体  */
+@mixin font-family($custom) {
+  font-family: $custom -apple-system, BlinkMacSystemFont, 'SF-Pro-Text', 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+/** 设置内容由显示变为隐藏 */
+@keyframes fadenum {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/** 元素展开 */
+@keyframes spread {
+  0% {
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

@@ -1,26 +1,29 @@
 <template>
   <div class="ObjectiveCard">
-    <div class="obj_input">
-      <div class="obj_input_cont">
-        <div>
-          <span role="img" class="i-icon-target" style="outline: none;">
-            <svg
-              width="1em"
-              height="1em"
-              fill="currentColor"
-              aria-hidden="true"
-              focusable="false"
-              class
-            >
-              <use xlink:href="#tu-icon-OKRmubiao" />
-            </svg>
-          </span>
-          <textarea
-            v-model="deep_list.content"
-            class="obj_input_content"
-            :style="{ height: '34px' }"
-            @blur="changeContent"
-          ></textarea>
+    <div class="obj_row">
+      <div class="obj_input">
+        <div style="margin-left: 24px;">
+          <div class="obj_input_cont">
+            <span role="img" class="i-icon-target anticon" style="outline: none;">
+              <svg
+                width="1em"
+                height="1em"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+                class
+              >
+                <use xlink:href="#tu-icon-OKRmubiao" />
+              </svg>
+            </span>
+            <textarea
+              v-model="deep_list.content"
+              class="obj_input_content"
+              style=" height: 34px !important "
+              placeholder="填写目标，按 Enter 键保存"
+              @blur="changeContent"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>

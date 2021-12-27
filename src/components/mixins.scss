@@ -78,13 +78,38 @@
 }
 
 @mixin placeholder {
-  &::-webkit-input-placeholder,
-  &::-moz-placeholder,
-  &::-ms-input-placeholder {
+  &::placeholder {
     font-weight: normal;
     opacity: 0.7;
-    color:red;
+    @include placeholder-color()
   }
+}
+
+@mixin textarea {
+  box-sizing: border-box;
+  position: relative;
+  margin-right: 16px;
+  margin-left: -4px;
+  padding: 5px 4px;
+  width: calc(100vw - 590px);
+
+  min-width: 480px;
+  border-radius: 4px;
+  line-height: 22px;
+  word-break: unset;
+  outline: none;
+  background-color: transparent;
+  resize: none;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  font-family: inherit;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+  text-align: justify;
+  word-break: break-all;
+  @include placeholder();
 }
 
 @mixin translateX($x: 0) {

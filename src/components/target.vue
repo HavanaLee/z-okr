@@ -1,6 +1,6 @@
 <template>
   <div class="ObjectiveCard">
-    <div class="obj_row">
+    <div class="obj_row" tabindex="1">
       <div class="obj_input">
         <div style="margin-left: 24px;">
           <div class="obj_input_cont">
@@ -16,13 +16,17 @@
                 <use xlink:href="#tu-icon-OKRmubiao" />
               </svg>
             </span>
-            <textarea
+            <el-input
+              type="textarea"
               v-model="deep_list.content"
               class="obj_input_content"
-              style=" height: 34px !important "
               placeholder="填写目标，按 Enter 键保存"
-              @blur="changeContent"
-            ></textarea>
+              @blur="blurInput"
+              maxlength="500"
+              resize="none"
+              :autosize="true"
+              @focus="foucusInput"
+            ></el-input>
           </div>
         </div>
       </div>
@@ -31,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, reactive, watch, watchEffect } from 'vue'
+import { HtmlHTMLAttributes, onBeforeUnmount, reactive, watch, watchEffect } from 'vue'
 import { deepClone } from '../utils/index'
 const props = defineProps({
   list: {
@@ -58,6 +62,22 @@ const emit = defineEmits<{
     id?: string | undefined, content: string
   }): void
 }>()
+
+const foucusInput = function (e: FocusEvent) {
+  let target = e.target as HTMLElement
+  while (!target.classList.contains('obj_row')) {
+    target = target.parentElement as HTMLElement
+  }
+  target.classList.add('focus-input')
+}
+
+function blurInput(e: FocusEvent) {
+  let target = e.target as HTMLElement
+  while (!target.classList.contains('obj_row')) {
+    target = target.parentElement as HTMLElement
+  }
+  target.classList.remove('focus-input')
+}
 function changeContent() {
   emit('change_content', deep_list)
 }

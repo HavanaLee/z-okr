@@ -1,4 +1,5 @@
 @import './mixins.scss';
+
 @mixin flex($ai) {
   display: flex !important;
   align-items: $ai;
@@ -58,35 +59,12 @@ $purple: #494bbf;
         }
 
         .obj_input_content {
-          box-sizing: border-box;
-          position: relative;
-          margin-right: 16px;
-          margin-left: -4px;
-          padding: 5px 4px;
-          width: calc(100vw - 590px);
-
-          min-width: 480px;
-          box-shadow: 0 1px 0 0px var(--GY04) inset;
-          border: 1px solid var(--GY02);
-          border-radius: 4px;
-          line-height: 22px;
-          word-break: unset;
-          outline: none;
-          background-color: transparent;
-          resize: none;
-          overflow: hidden;
-          font-size: 16px;
-          font-weight: 500;
-          color: #333;
-          font-family: inherit;
-          border: 1px solid transparent !important;
-          box-shadow: none !important;
-          text-align: justify;
-          word-break: break-all;
-          @include placeholder();
-
           &:read-only {
             cursor: default;
+          }
+
+          textarea {
+            @include textarea()
           }
         }
       }

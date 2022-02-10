@@ -1,5 +1,6 @@
 <template>
   <div class="ObjectiveCard">
+    <!-- 内容行 -->
     <div class="obj_row" tabindex="1">
       <div class="obj_input">
         <div style="margin-left: 24px;">
@@ -31,12 +32,89 @@
         </div>
       </div>
     </div>
+    <!-- 指标部分 -->
+    <div class="KeyResult" v-for="v in deep_list.indicator" :key="v.id">
+      <div class="key_res_info"></div>
+    </div>
+    <!-- 操作部分 -->
+    <div class="obj_action">
+      <button class="act_btn" @click="addIndicator">
+        <span role="img" class="i-icon-target anticon btn_span" style="outline: none;">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class
+          >
+            <use xlink:href="#tu-icon-tianjiazhibiao" />
+          </svg>
+        </span>添加指标
+      </button>
+      <button class="act_btn">
+        <span role="img" class="i-icon-target anticon btn_span" style="outline: none;">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class
+          >
+            <use xlink:href="#tu-icon-genggaizhibiaoshunxu" />
+          </svg>
+        </span>更换指标顺序
+      </button>
+      <button class="act_btn">
+        <span role="img" class="i-icon-target anticon btn_span" style="outline: none;">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class
+          >
+            <use xlink:href="#tu-icon-describe" />
+          </svg>
+        </span>填写进展
+      </button>
+      <button class="act_btn">
+        <span role="img" class="i-icon-target anticon btn_span" style="outline: none;">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class
+          >
+            <use xlink:href="#tu-icon-delete" />
+          </svg>
+        </span>删除目标
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { HtmlHTMLAttributes, onBeforeUnmount, reactive, watch, watchEffect } from 'vue'
+import { HtmlHTMLAttributes, onBeforeUnmount, reactive, ref, watch, watchEffect } from 'vue'
 import { deepClone } from '../utils/index'
+import { generateUUID } from '../utils/index'
+
+interface Objectives {
+  content: string
+  id: string
+  indicator: indicator[]
+}
+type indicator = {
+  id?: string
+  content: string
+  score: number
+  weigtht: string
+}
+
 const props = defineProps({
   list: {
     type: Object,
@@ -46,7 +124,7 @@ const props = defineProps({
   }
 })
 
-let deep_list: { content: string, id?: '' } = reactive({ content: '' })
+let deep_list: Objectives = reactive({ content: '', id: generateUUID(), indicator: [] })
 const stop = watch([props.list], val => {
   console.log('props', val);
 
@@ -80,6 +158,10 @@ function blurInput(e: FocusEvent) {
 }
 function changeContent() {
   emit('change_content', deep_list)
+}
+
+function addIndicator() {
+  deep_list.indicator.push({ content: '', score: 1, weigtht: '100%' })
 }
 </script>
 

@@ -49,6 +49,7 @@ interface TargetType {
   content?: string
   id: string
   score?: string
+  indicator: object[]
 }
 const target_list = ref<TargetType[]>([])
 
@@ -58,7 +59,7 @@ const changeTarget = (val: TargetType) => {
 
 const showBtnSubtitle = computed(() => !target_list.value.length)
 const addTarget = () => {
-  target_list.value.push({ content: '', id: generateUUID() })
+  target_list.value.push({ content: '', id: generateUUID(), indicator: [{ content: '', score: 1, weigtht: '100%' }] })
 }
 </script>
 

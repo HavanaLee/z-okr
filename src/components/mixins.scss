@@ -69,6 +69,12 @@
   }
 }
 
+@mixin act-btn {
+  margin-right: 4px;
+  font-size: 16px;
+  color: #aeafb2;
+}
+
 @mixin placeholder-color {
   color: rgba(#999, 0.7);
 }

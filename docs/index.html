@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>z-okr</title>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      height: 100%;
+      line-height: 1.5;
+      font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Helvetica, sans-serif !important;
+    }
+
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/index.f8301cdd.js"></script>
+  <link rel="modulepreload" href="/assets/vendor.8eac354e.js">
+  <link rel="stylesheet" href="/assets/index.4d97900c.css">
+</head>
+
+<body>
+  <svg style="position: absolute; width: 0px; height: 0px; overflow: hidden;" aria-hidden="true">
+    <!-- 目标 -->
+    <symbol id="tu-icon-OKRmubiao" viewBox="0 0 1024 1024">
+      <path d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z" fill="#494BBF" fill-opacity=".6"></path>
+      <path d="M512 512m-384 0a384 384 0 1 0 768 0 384 384 0 1 0-768 0Z" fill="#FFFFFF"></path>
+      <path d="M512 512m-256 0a256 256 0 1 0 512 0 256 256 0 1 0-512 0Z" fill="#494BBF" opacity=".8"></path>
+      <path d="M512 512m-128 0a128 128 0 1 0 256 0 128 128 0 1 0-256 0Z" fill="#FFFFFF"></path>
+      <path d="M862.08 94.08l67.84 67.84-384 384-67.84-67.84z" fill="#494BBF"></path>
+      <path d="M768 0v256h256V128h-128V0z" fill="#494BBF"></path>
+    </symbol>
+    <!-- 新增目标 -->
+    <symbol id="tu-icon-add" viewBox="0 0 1024 1024">
+      <path
+        d="M560 160v304h304a32 32 0 0 1 32 32v32a32 32 0 0 1-32 32H560v304a32 32 0 0 1-32 32h-32a32 32 0 0 1-32-32V560H160a32 32 0 0 1-32-32v-32a32 32 0 0 1 32-32h304V160a32 32 0 0 1 32-32h32a32 32 0 0 1 32 32z">
+      </path>
+    </symbol>
+    <!-- 添加指标 -->
+    <symbol id="tu-icon-tianjiazhibiao" viewBox="0 0 1024 1024">
+      <path d="M288 464m32 0l384 0q32 0 32 32l0 32q0 32-32 32l-384 0q-32 0-32-32l0-32q0-32 32-32Z"></path>
+      <path d="M560 288m0 32l0 384q0 32-32 32l-32 0q-32 0-32-32l0-384q0-32 32-32l32 0q32 0 32 32Z"></path>
+      <path
+        d="M832 80H192A112 112 0 0 0 80 192v640c0 61.824 50.176 112 112 112h640A112 112 0 0 0 944 832V192A112 112 0 0 0 832 80zM192 176h640a16 16 0 0 1 16 16v640a16 16 0 0 1-16 16H192a16 16 0 0 1-16-16V192A16 16 0 0 1 192 176z">
+      </path>
+    </symbol>
+    <!-- 更换指标顺序 -->
+    <symbol id="tu-icon-genggaizhibiaoshunxu" viewBox="0 0 1024 1024">
+      <path
+        d="M501.76 670.72l20.48 24.576a32 32 0 0 1-4.096 45.056L340.48 888.384a32 32 0 0 1-40.96 0l-177.664-148.032a32 32 0 0 1-4.096-45.056l20.48-24.576a32 32 0 0 1 45.056-4.096L320 780.48l136.704-113.92a32 32 0 0 1 45.056 4.16z">
+      </path>
+      <path
+        d="M368 224v576a32 32 0 0 1-32 32h-32a32 32 0 0 1-32-32v-576a32 32 0 0 1 32-32h32a32 32 0 0 1 32 32zM522.24 353.088l-20.48-24.576a32 32 0 0 1 4.096-45.056l177.664-148.032a32 32 0 0 1 40.96 0l177.664 148.032a32 32 0 0 1 4.096 45.056l-20.48 24.576a32 32 0 0 1-45.056 4.16L704 243.328l-136.704 113.92a32 32 0 0 1-45.056-4.16z">
+      </path>
+      <path d="M656 799.808v-576a32 32 0 0 1 32-32h32a32 32 0 0 1 32 32v576a32 32 0 0 1-32 32h-32a32 32 0 0 1-32-32z">
+      </path>
+    </symbol>
+    <!-- 填写进展 -->
+    <symbol id="tu-icon-describe" viewBox="0 0 1024 1024">
+      <path
+        d="M736 528a32 32 0 0 1 32 32v32a32 32 0 0 1-32 32h-448a32 32 0 0 1-32-32v-32a32 32 0 0 1 32-32h448z m0-192a32 32 0 0 1 32 32v32a32 32 0 0 1-32 32h-256a32 32 0 0 1-32-32v-32a32 32 0 0 1 32-32h256z m-416 0a32 32 0 0 1 32 32v32a32 32 0 0 1-32 32h-32a32 32 0 0 1-32-32v-32a32 32 0 0 1 32-32H320z">
+      </path>
+      <path
+        d="M880 64.192H144c-44.16 0-80 35.84-80 80V880c0 44.16 35.84 80 80 80h736c44.224 0 80-35.84 80-80V144.192c0-44.16-35.776-80-80-80z m-16 96V864h-704V160.128h704z">
+      </path>
+    </symbol>
+    <!-- 删除目标 -->
+    <symbol id="tu-icon-delete" viewBox="0 0 1024 1024">
+      <path
+        d="M928 256a32 32 0 0 1 32 32V320a32 32 0 0 1-32 32h-64.512l0.832 528.128a80 80 0 0 1-71.808 79.616l-8.192 0.384H240.128a80 80 0 0 1-79.616-71.808l-0.384-8.192L159.296 352H96A32 32 0 0 1 64 320v-32a32 32 0 0 1 32-32h832z m-160.512 96H255.296l0.832 512.064h512.192L767.488 352zM623.936 448.192a32 32 0 0 1 32 32v256.064a32 32 0 0 1-32 32h-32a32 32 0 0 1-32-32v-256a32 32 0 0 1 32-32h32z m-192 0a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32h-32a32 32 0 0 1-32-32v-256a32 32 0 0 1 32-32h32zM672 64a32 32 0 0 1 32 32V128a32 32 0 0 1-32 32h-320A32 32 0 0 1 320 128v-32a32 32 0 0 1 32-32h320z">
+      </path>
+    </symbol>
+  </svg>
+  <div id="app"></div>
+  
+</body>
+
+</html>

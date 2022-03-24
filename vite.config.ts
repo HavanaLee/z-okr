@@ -16,7 +16,12 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
   ],
-  base: './',
+  build: {
+    target: 'modules',
+    outDir: 'docs',
+    minify: 'terser' // 混淆器，terser构建后文件体积更小
+  },
+  base: '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

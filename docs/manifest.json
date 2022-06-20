@@ -1,0 +1,27 @@
+{
+  "index.html": {
+    "file": "static/js/index.2f123f47.js",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_vendor.eff88591.js"
+    ],
+    "dynamicImports": [
+      "src/views/home.vue"
+    ]
+  },
+  "_vendor.eff88591.js": {
+    "file": "static/js/vendor.eff88591.js"
+  },
+  "src/views/home.vue": {
+    "file": "static/js/home.4ba74a48.js",
+    "src": "src/views/home.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor.eff88591.js"
+    ],
+    "assets": [
+      "static/png/target.eb67551d.png"
+    ]
+  }
+}

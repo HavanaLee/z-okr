@@ -6,90 +6,47 @@
         <div style="margin-left: 24px;">
           <div class="obj_input_cont">
             <span role="img" class="i-icon-target anticon" style="outline: none;">
-              <svg
-                width="1em"
-                height="1em"
-                fill="currentColor"
-                aria-hidden="true"
-                focusable="false"
-                class
-              >
+              <svg width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class>
                 <use xlink:href="#tu-icon-OKRmubiao" />
               </svg>
             </span>
-            <el-input
-              type="textarea"
-              v-model="deep_list.content"
-              class="obj_input_content"
-              placeholder="填写目标，按 Enter 键保存"
-              @blur="blurInput"
-              maxlength="500"
-              resize="none"
-              :autosize="true"
-              @focus="foucusInput"
-            ></el-input>
+            <el-input type="textarea" v-model="props.list.content" class="obj_input_content"
+              placeholder="填写目标，按 Enter 键保存" @blur="blurInput" maxlength="500" resize="none" :autosize="true"
+              @focus="foucusInput"></el-input>
           </div>
         </div>
       </div>
     </div>
     <!-- 指标部分 -->
-    <div class="KeyResult" v-for="v in deep_list.indicator" :key="v.id">
+    <div class="KeyResult" v-for="v in deep_list.obj.indicator" :key="v.id">
       <div class="key_res_info"></div>
     </div>
     <!-- 操作部分 -->
     <div class="obj_action">
       <button class="act_btn" @click="addIndicator">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none;">
-          <svg
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            class
-          >
+          <svg width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class>
             <use xlink:href="#tu-icon-tianjiazhibiao" />
           </svg>
         </span>添加指标
       </button>
       <button class="act_btn">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none;">
-          <svg
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            class
-          >
+          <svg width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class>
             <use xlink:href="#tu-icon-genggaizhibiaoshunxu" />
           </svg>
         </span>更换指标顺序
       </button>
       <button class="act_btn">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none;">
-          <svg
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            class
-          >
+          <svg width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class>
             <use xlink:href="#tu-icon-describe" />
           </svg>
         </span>填写进展
       </button>
-      <button class="act_btn">
+      <button class="act_btn" @click="emit('delete_target', deep_list.id)">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none;">
-          <svg
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            class
-          >
+          <svg width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class>
             <use xlink:href="#tu-icon-delete" />
           </svg>
         </span>删除目标
@@ -99,47 +56,28 @@
 </template>
 
 <script setup lang="ts">
-import { HtmlHTMLAttributes, onBeforeUnmount, reactive, ref, watch, watchEffect } from 'vue'
+import { HtmlHTMLAttributes, onBeforeUnmount, reactive, ref, watch, } from 'vue'
 import { deepClone } from '../utils/index'
 import { generateUUID } from '../utils/index'
 
-interface Objectives {
-  content: string
-  id: string
-  indicator: indicator[]
-}
-type indicator = {
-  id?: string
-  content: string
-  score: number
-  weigtht: string
-}
 
-const props = defineProps({
-  list: {
-    type: Object,
-    default() {
-      return {}
-    }
-  }
+
+
+const props = defineProps(['list'])
+
+let deep_list = reactive({
+  obj: {} as TargetType
 })
+const stop = watch(props.list, val => {
 
-let deep_list: Objectives = reactive({ content: '', id: generateUUID(), indicator: [] })
-const stop = watch([props.list], val => {
-  console.log('props', val);
-
-  deep_list = deepClone(val)
-}, { deep: true })
+  deep_list.obj = deepClone(val)
+}, { immediate: true, deep: true })
 
 onBeforeUnmount(() => {
   stop()
 })
 
-const emit = defineEmits<{
-  (e: 'change_content', obj: {
-    id?: string | undefined, content: string
-  }): void
-}>()
+const emit = defineEmits(['change_content', 'delete_target'])
 
 const foucusInput = function (e: FocusEvent) {
   let target = e.target as HTMLElement
@@ -155,13 +93,11 @@ function blurInput(e: FocusEvent) {
     target = target.parentElement as HTMLElement
   }
   target.classList.remove('focus-input')
-}
-function changeContent() {
-  emit('change_content', deep_list)
+  emit('change_content', deep_list.obj)
 }
 
 function addIndicator() {
-  deep_list.indicator.push({ content: '', score: 1, weigtht: '100%' })
+  deep_list.obj.indicator.push({ content: '', score: 1, weigtht: '100%' })
 }
 </script>
 

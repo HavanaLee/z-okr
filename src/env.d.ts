@@ -6,3 +6,17 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare type TargetType = {
+  content?: string
+  id: string
+  score?: string
+  indicator: indicator[]
+}
+
+declare type indicator = {
+  id?: string
+  content?: string
+  score?: number
+  weigtht?: string
+}

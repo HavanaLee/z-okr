@@ -155,3 +155,47 @@
     }
   }
 }
+
+.el-dialog {
+  min-height: 244px;
+  border-radius: 8px;
+  background-color: #fff;
+  outline: none;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .el-dialog__footer {
+    padding: 0 32px 32px;
+
+    .el-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      outline: none;
+      height: 40px;
+      min-width: 88px;
+      padding: 0 16px;
+      border-radius: 4px;
+      background-color: #494bbf;
+      font-size: 14px;
+      color: #fff;
+      transition: background-color .3s, border-color .3s;
+      cursor: pointer;
+    }
+
+    .el-button--default {
+      border: 1px solid hsla(0, 0%, 80%, .7);
+      background-color: #fff;
+      color: rgba(0, 0, 0, .85);
+    }
+  }
+
+  .el-dialog__body {
+    padding: 24px 32px 24px;
+    display: flex;
+    align-items: flex-start;
+  }
+}

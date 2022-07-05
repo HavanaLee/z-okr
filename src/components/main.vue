@@ -70,7 +70,7 @@ const changeTarget = (val: TargetType) => {
 
 const showBtnSubtitle = computed(() => !target_list.value.length)
 const addTarget = () => {
-  target_list.value.push({ content: '', id: generateUUID(), indicator: [{ content: '', score: 1, weigtht: '100%' }] })
+  target_list.value.push({ content: '', id: generateUUID(), indicator: [] })
 }
 
 const delete_target = (id: string, source: string) => {

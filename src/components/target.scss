@@ -3,7 +3,7 @@
 
 @mixin flex($ai) {
   display: flex !important;
-  align-items: $ai;
+  align-items: $ai  !important;
 }
 
 @mixin front($content, $pos, $bg) {
@@ -83,7 +83,7 @@ $purple: #494bbf;
   // 输入框聚焦态
   .focus-input {
     border-radius: 4px;
-    border-color: $purple !important;
+    border-color: $purple  !important;
   }
 
   // 指标部分
@@ -116,17 +116,21 @@ $purple: #494bbf;
         transform: translateY(-50%);
         border-radius: 50%;
 
-        .ant-input {
-          font-size: 14px;
-          color: #333;
-          margin: 12px 16px;
-          min-width: 480px;
-          width: calc(100vw - 620px);
-          padding: 1px 0;
-          border: 0 !important;
-          box-shadow: none !important;
-          line-height: 20px;
-        }
+      }
+
+      .el-textarea__inner {
+        font-size: 14px;
+        color: #333;
+        margin: 12px 16px;
+        min-width: 480px;
+        width: calc(100vw - 620px);
+        padding: 1px 0;
+        border: 0 !important;
+        box-shadow: none !important;
+        border-radius: 4px;
+        background: transparent;
+        line-height: 20px;
+        text-align: justify
       }
 
       .key_res_order {
@@ -151,24 +155,11 @@ $purple: #494bbf;
       .key_res_act {
         @include flex(center);
 
-        &>div {
-          cursor: pointer;
-
-          .i-icon {
-            height: 16px;
-            line-height: 0;
-          }
-
-          &:hover {
-            span {
-              color: $purple !important;
-            }
-          }
-        }
-
         // 删除
         .key_res_del {
+          height: 22px;
           display: none;
+          // align-items: center;
           color: #aeafb2;
         }
 
@@ -186,9 +177,13 @@ $purple: #494bbf;
 
           span {
             &:last-child {
+              margin-left: 8px;
               color: #333;
             }
           }
+
+
+
         }
 
         // 评分
@@ -223,6 +218,22 @@ $purple: #494bbf;
             }
           }
         }
+
+        &>div {
+          cursor: pointer;
+
+          span {
+            @include flex(center);
+            height: 16px;
+            line-height: 0;
+          }
+
+          &:hover {
+            span {
+              color: $purple  !important;
+            }
+          }
+        }
       }
     }
 
@@ -231,13 +242,18 @@ $purple: #494bbf;
 
       .key_res_del {
         @include flex(center);
-        color: $purple;
+
+        &:hover {
+          color: $purple;
+        }
       }
 
       .score_input {
         border: 1px solid hsla(0, 0%, 80%, 0.7) !important;
       }
     }
+
+
   }
 
   // 进展

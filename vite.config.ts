@@ -36,7 +36,7 @@ export default defineConfig({
 
   },
 
-  base: './',
+  base: '/docs/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

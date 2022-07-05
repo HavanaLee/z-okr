@@ -10,12 +10,13 @@ declare module '*.vue' {
 declare type TargetType = {
   content?: string
   id: string
-  score?: string
+  score?: string,
   indicator: indicator[]
 }
 
 declare type indicator = {
-  id?: string
+  id: string
+  isFocused: boolean,
   content?: string
   score?: number
   weigtht?: string

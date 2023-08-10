@@ -114,12 +114,14 @@
         border-radius: 4px;
         display: flex;
         width: 100%;
-        border: 1px dashed hsla(0, 0%, 80%, .7);
+        border: 1px dashed hsla(0, 0%, 80%, 0.7);
         background-color: #fff;
         align-items: center;
         min-width: 88px;
         padding: 0 16px;
-        transition: background-color .3s, border-color .3s;
+        transition:
+          background-color 0.3s,
+          border-color 0.3s;
         cursor: pointer;
 
         .add_obj_subtitle {
@@ -145,7 +147,7 @@
           line-height: 0;
           text-align: center;
           text-transform: none;
-          vertical-align: -.125em;
+          vertical-align: -0.125em;
           text-rendering: optimizeLegibility;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
@@ -182,14 +184,16 @@
       background-color: #494bbf;
       font-size: 14px;
       color: #fff;
-      transition: background-color .3s, border-color .3s;
+      transition:
+        background-color 0.3s,
+        border-color 0.3s;
       cursor: pointer;
     }
 
     .el-button--default {
-      border: 1px solid hsla(0, 0%, 80%, .7);
+      border: 1px solid hsla(0, 0%, 80%, 0.7);
       background-color: #fff;
-      color: rgba(0, 0, 0, .85);
+      color: rgba(0, 0, 0, 0.85);
     }
   }
 

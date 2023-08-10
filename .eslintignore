@@ -1,0 +1,7 @@
+node_modules
+docs
+env
+.gitignore
+yarn.lock
+README.md
+src/assets/*

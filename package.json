@@ -37,8 +37,7 @@
   "lint-staged": {
     "*.{ts, tsx, js, jsx, json}": [
       "eslint --fix",
-      "prettier --write",
-      "npx eslint --cache --fix --cache-location ./node_modules/.cache/.eslintcache"
+      "prettier --write"
     ]
   }
 }

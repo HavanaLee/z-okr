@@ -29,4 +29,9 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs # 修改为您的构建输出目录
+          publish_branch: gh-pages # 您的 GitHub Pages 分支
+
+env:
+  JEKYLL_ENV: production
+  JEKYLL_SRC: docs # 将此设置为您的 Jekyll 源代码目录
 

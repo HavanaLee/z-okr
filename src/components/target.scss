@@ -3,7 +3,7 @@
 
 @mixin flex($ai) {
   display: flex !important;
-  align-items: $ai  !important;
+  align-items: $ai !important;
 }
 
 @mixin front($content, $pos, $bg) {
@@ -21,7 +21,7 @@ $purple: #494bbf;
   line-height: 0;
   text-align: center;
   text-transform: none;
-  vertical-align: -.125em;
+  vertical-align: -0.125em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -65,13 +65,11 @@ $purple: #494bbf;
           }
 
           textarea {
-            @include textarea()
+            @include textarea();
           }
         }
       }
-
     }
-
 
     .score {
       max-width: 100px;
@@ -83,7 +81,7 @@ $purple: #494bbf;
   // 输入框聚焦态
   .focus-input {
     border-radius: 4px;
-    border-color: $purple  !important;
+    border-color: $purple !important;
   }
 
   // 指标部分
@@ -115,7 +113,6 @@ $purple: #494bbf;
         left: 40px;
         transform: translateY(-50%);
         border-radius: 50%;
-
       }
 
       .el-textarea__inner {
@@ -130,7 +127,7 @@ $purple: #494bbf;
         border-radius: 4px;
         background: transparent;
         line-height: 20px;
-        text-align: justify
+        text-align: justify;
       }
 
       .key_res_order {
@@ -181,9 +178,6 @@ $purple: #494bbf;
               color: #333;
             }
           }
-
-
-
         }
 
         // 评分
@@ -219,7 +213,7 @@ $purple: #494bbf;
           }
         }
 
-        &>div {
+        & > div {
           cursor: pointer;
 
           span {
@@ -230,7 +224,7 @@ $purple: #494bbf;
 
           &:hover {
             span {
-              color: $purple  !important;
+              color: $purple !important;
             }
           }
         }
@@ -252,8 +246,6 @@ $purple: #494bbf;
         border: 1px solid hsla(0, 0%, 80%, 0.7) !important;
       }
     }
-
-
   }
 
   // 进展
@@ -307,11 +299,12 @@ $purple: #494bbf;
       border-radius: 4px;
       font-size: 14px;
       color: #fff;
-      transition: background-color .3s,
-        border-color .3s;
-      border: 1px solid hsla(0, 0%, 80%, .7);
+      transition:
+        background-color 0.3s,
+        border-color 0.3s;
+      border: 1px solid hsla(0, 0%, 80%, 0.7);
       background-color: #fff;
-      color: rgba(0, 0, 0, .85);
+      color: rgba(0, 0, 0, 0.85);
       cursor: pointer;
       margin-right: 12px;
       color: #333;
@@ -321,7 +314,7 @@ $purple: #494bbf;
       }
 
       .btn_span {
-        @include act-btn()
+        @include act-btn();
       }
     }
   }
@@ -408,17 +401,20 @@ $purple: #494bbf;
 
         @include flex(center);
         font-size: 20px;
-        background-image: linear-gradient(#ebecf0, #ebecf0),
-        linear-gradient(#494bbf, #494bbf);
-        background-size: 100% 2px,
-        0 2px;
-        background-position: 100% 100%,
-        0 100%;
+        background-image: linear-gradient(#ebecf0, #ebecf0), linear-gradient(#494bbf, #494bbf);
+        background-size:
+          100% 2px,
+          0 2px;
+        background-position:
+          100% 100%,
+          0 100%;
         background-repeat: no-repeat;
         transition: background-size 0.2s ease;
 
         &:focus-within {
-          background-size: 0 2px, 100% 2px !important;
+          background-size:
+            0 2px,
+            100% 2px !important;
         }
 
         .weight_header_power_input {

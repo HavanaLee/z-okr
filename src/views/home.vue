@@ -10,7 +10,7 @@ import Aside from '../components/aside.vue'
 import Main from '../components/main.vue'
 </script>
 
-<style  scoped lang="scss">
+<style scoped lang="scss">
 section {
   width: 100vw;
   height: 100vh;

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   rules: {
     'type-enum': [
       2,

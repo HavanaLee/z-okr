@@ -33,7 +33,7 @@ export default defineConfig({
     }
   },
 
-  base: '/z-okr/',
+  base: '/docs/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

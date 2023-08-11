@@ -17,7 +17,6 @@ export default defineConfig({
     })
   ],
   build: {
-    brotliSize: false /* 压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能 */,
     outDir: 'docs' /* 指定输出路径 */,
     cssCodeSplit: false /* 整个项目中的所有 CSS 将被提取到一个 CSS 文件中 */,
     chunkSizeWarningLimit: 1500 /* chunk 大小警告的限制（以 kbs 为单位） */,

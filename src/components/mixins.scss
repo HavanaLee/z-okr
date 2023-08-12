@@ -87,7 +87,7 @@
   &::placeholder {
     font-weight: normal;
     opacity: 0.7;
-    @include placeholder-color()
+    @include placeholder-color();
   }
 }
 
@@ -138,9 +138,21 @@
 
 /** 如果自定义字体不存在，会走后面的字体  */
 @mixin font-family($custom) {
-  font-family: $custom -apple-system, BlinkMacSystemFont, 'SF-Pro-Text', 'Segoe UI', 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family:
+    $custom -apple-system,
+    BlinkMacSystemFont,
+    'SF-Pro-Text',
+    'Segoe UI',
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    'Helvetica Neue',
+    Helvetica,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol';
 }
 
 /** 设置内容由显示变为隐藏 */

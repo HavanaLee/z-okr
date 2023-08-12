@@ -4,3 +4,7 @@ dist
 dist-ssr
 docs
 *.local
+yarn-error.log
+.vscode
+auto-imports.d.ts
+components.d.ts

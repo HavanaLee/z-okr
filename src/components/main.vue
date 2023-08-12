@@ -15,34 +15,51 @@
         </div>
         <div class="MonthlyObjective_monthly-objective">
           <div class="title"></div>
-          <Target :list="v" @change_content="changeTarget" v-for="v in target_list" :key="v.id"
-            @delete_target="delete_target"></Target>
+          <Target
+            v-for="v in target_list"
+            :key="v.id"
+            :list="v"
+            @change_content="changeTarget"
+            @delete_target="delete_target"
+          ></Target>
         </div>
         <!-- 新增按钮 -->
         <button class="add_btn" @click="addTarget">
-          <span role="img" class="icon-plus" style="outline: none;">
-            <svg width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class>
+          <span role="img" class="icon-plus" style="outline: none">
+            <svg
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              aria-hidden="true"
+              focusable="false"
+              class
+            >
               <use xlink:href="#tu-icon-add" />
             </svg>
           </span>
           新增目标
-          <span class="add_obj_subtitle" v-if="showBtnSubtitle">点击“新增目标”按钮创建次双月第一个重要目标</span>
+          <span v-if="showBtnSubtitle" class="add_obj_subtitle"
+            >点击“新增目标”按钮创建次双月第一个重要目标</span
+          >
         </button>
       </div>
     </div>
   </div>
-  <el-dialog v-model="isVisible" width="520px" custom-class="delete_target" :show-close="false" top="35vh">
-    <img :src="delete_png" width="100" height="100" style="margin-right: 24px;">
+  <el-dialog v-model="isVisible" width="520px" class="delete_target" :show-close="false" top="35vh">
+    <img :src="delete_png" width="100" height="100" style="margin-right: 24px" />
     <div>
-      <div style="text-align:left;font-size: 20px;font-weight: 500;color: #333;">删除{{ isDeleteTarget ? '目标' : '指标' }}
+      <div style="text-align: left; font-size: 20px; font-weight: 500; color: #333">
+        删除{{ isDeleteTarget ? '目标' : '指标' }}
       </div>
-      <div style="font-size: var('--el-font-size-medium');margin-top: 8px;color: #999;">删除{{ isDeleteTarget ? '目标' :
-          '指标'
-      }}后不可恢复，是否继续{{ isDeleteTarget ? '?' : '' }}</div>
+      <div style="font-size: var('--el-font-size-medium'); margin-top: 8px; color: #999">
+        删除{{ isDeleteTarget ? '目标' : '指标' }}后不可恢复，是否继续{{
+          isDeleteTarget ? '?' : ''
+        }}
+      </div>
     </div>
     <template #footer>
-      <span class=" dialog-footer">
-        <el-button @click="isVisible = false; isDeleteIndex = false; isDeleteTarget = false">否</el-button>
+      <span class="dialog-footer">
+        <el-button @click="cancel_delete">否</el-button>
         <el-button type="primary" @click="query_delete">是</el-button>
       </span>
     </template>
@@ -55,7 +72,6 @@ import delete_png from '../assets/del.png'
 import Target from '@/components/target.vue'
 import { computed, ref } from 'vue'
 import { generateUUID } from '../utils/index'
-
 
 const target_list = ref<TargetType[]>([])
 let isVisible = ref<boolean>(false)
@@ -74,7 +90,7 @@ const addTarget = () => {
 }
 
 const delete_target = (id: string, source: string) => {
-  source === 'target' ? isDeleteTarget.value = true : isDeleteIndex.value = true
+  source === 'target' ? (isDeleteTarget.value = true) : (isDeleteIndex.value = true)
   isVisible.value = true
   delete_id.value = id
 }
@@ -84,8 +100,14 @@ const query_delete = () => {
   target_list.value.splice(idx, 1)
   isVisible.value = false
 }
+
+const cancel_delete = () => {
+  isVisible.value = false
+  isDeleteIndex.value = false
+  isDeleteTarget.value = false
+}
 </script>
 
 <style lang="scss" scoped>
-@import "./main.scss";
+@import './main.scss';
 </style>

@@ -6,7 +6,6 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <router-view />
-
 </template>
 
 <style>

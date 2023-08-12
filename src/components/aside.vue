@@ -5,9 +5,7 @@
 </template>
 
 <script>
-export default {
-  name: "Aside",
-};
+export default {}
 </script>
 
 <style scoped lang="scss">

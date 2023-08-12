@@ -45,13 +45,7 @@
       </div>
     </div>
   </div>
-  <el-dialog
-    v-model="isVisible"
-    width="520px"
-    custom-class="delete_target"
-    :show-close="false"
-    top="35vh"
-  >
+  <el-dialog v-model="isVisible" width="520px" class="delete_target" :show-close="false" top="35vh">
     <img :src="delete_png" width="100" height="100" style="margin-right: 24px" />
     <div>
       <div style="text-align: left; font-size: 20px; font-weight: 500; color: #333">

@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'prettier/prettier': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
-    'unused-imports/no-unused-imports': 'error'
+    'unused-imports/no-unused-imports': 'error',
+    'vue/multi-word-component-names': 'off'
   }
 }

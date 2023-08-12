@@ -45,9 +45,7 @@ export default defineConfig({
     strictPort: true /* 设为 true 时若端口已被占用则会直接退出 */,
     // https: true,
     open: '/' /* 在服务器启动时自动在浏览器中打开应用程序 */,
-    hmr: {
-      overlay: false /* 为 false 可以禁用服务器错误遮罩层 */
-    },
+    hmr: true,
     proxy: {
       // 字符串简写写法
       '/foo': 'http://localhost:4567/foo',

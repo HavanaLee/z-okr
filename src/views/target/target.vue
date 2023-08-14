@@ -34,50 +34,12 @@
     </div>
     <!-- 指标部分 -->
     <div v-for="(v, i) in deep_target.indicator" :key="v.id" class="KeyResult">
-      <div class="key_res_info">
-        <el-input
-          v-model="v.content"
-          type="textarea"
-          placeholder="填写指标，用他来实现目标"
-          maxlength="500"
-          resize="none"
-          :autosize="true"
-          @focus="foucusInput($event, 'index', i)"
-          @blur="blurInput($event, 'index', i)"
-        ></el-input>
-        <div class="key_res_act">
-          <div class="key_res_del">
-            <span>
-              <svg
-                width="1em"
-                height="1em"
-                fill="currentColor"
-                aria-hidden="true"
-                focusable="false"
-                class=""
-              >
-                <use xlink:href="#tu-icon-delete"></use>
-              </svg>
-            </span>
-          </div>
-          <div v-show="v.isFocused" class="key_res_weight">
-            <span>
-              <svg
-                width="1em"
-                height="1em"
-                fill="currentColor"
-                aria-hidden="true"
-                focusable="false"
-                class=""
-              >
-                <use xlink:href="#tu-icon-bingtu"></use>
-              </svg>
-            </span>
-            <span>{{ v.weigtht }}</span>
-          </div>
-          <!-- <div class="key_res_score"></div> -->
-        </div>
-      </div>
+      <indicator
+        :indicator="v"
+        :index="i"
+        @focus-indicator="foucusInput"
+        @focus-blur="blurInput"
+      ></indicator>
     </div>
     <!-- 操作部分 -->
     <div class="obj_action">
@@ -145,6 +107,7 @@
 import { onBeforeUnmount, ref, watchEffect } from 'vue'
 import { generateUUID } from '@/utils'
 import type { TargetType } from './target'
+import Indicator from '../indicator'
 
 const props = defineProps({
   target: {
@@ -189,7 +152,7 @@ const foucusInput = function (e: FocusEvent, source: string, i?: number) {
   if (typeof i === 'number' && i >= 0) deep_target.value.indicator[i].isFocused = false
 }
 
-function blurInput(e: FocusEvent, source: string, i?: number) {
+function blurInput(e: FocusEvent, source: string, i?: number, val?: string) {
   let target = e.target as HTMLElement
   while (
     (!target.classList.contains('obj_row') && source === 'target') ||
@@ -198,7 +161,10 @@ function blurInput(e: FocusEvent, source: string, i?: number) {
     target = target.parentElement as HTMLElement
   }
   target.classList.remove('focus-input')
-  if (typeof i === 'number' && i >= 0) deep_target.value.indicator[i].isFocused = true
+  if (typeof i === 'number' && i >= 0) {
+    if (typeof val === 'string' && val) deep_target.value.indicator[i].content = val
+    deep_target.value.indicator[i].isFocused = true
+  }
   emit('change_content', target_content, props.index)
 }
 
@@ -206,7 +172,7 @@ function addIndicator() {
   deep_target.value.indicator.push({
     content: '',
     score: 1,
-    weigtht: '100%',
+    weight: '100%',
     id: generateUUID(),
     isFocused: true
   })

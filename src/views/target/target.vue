@@ -18,7 +18,7 @@
               </svg>
             </span>
             <el-input
-              v-model="props.list.content"
+              v-model="target_content"
               type="textarea"
               class="obj_input_content"
               placeholder="填写目标，按 Enter 键保存"
@@ -33,7 +33,7 @@
       </div>
     </div>
     <!-- 指标部分 -->
-    <div v-for="(v, i) in deep_list.obj.indicator" :key="v.id" class="KeyResult">
+    <div v-for="(v, i) in deep_target.indicator" :key="v.id" class="KeyResult">
       <div class="key_res_info">
         <el-input
           v-model="v.content"
@@ -123,7 +123,7 @@
           </svg> </span
         >填写进展
       </button>
-      <button class="act_btn" @click="emit('delete_target', deep_list.obj.id)">
+      <button class="act_btn" @click="emit('delete_target', deep_target.id)">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
             width="1em"
@@ -142,22 +142,34 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, reactive, watch } from 'vue'
-import { deepClone } from '../utils/index'
-import { generateUUID } from '../utils/index'
+import { onBeforeUnmount, ref, watchEffect } from 'vue'
+import { generateUUID } from '@/utils'
+import type { TargetType } from './target'
 
-const props = defineProps(['list'])
-
-let deep_list = reactive({
-  obj: {} as TargetType
-})
-const stop = watch(
-  props.list,
-  val => {
-    deep_list.obj = deepClone(val)
+const props = defineProps({
+  target: {
+    type: Object as () => TargetType,
+    required: true
   },
-  { immediate: true, deep: true }
-)
+  index: {
+    type: Number,
+    default: 0
+  }
+})
+const target_content = ref('')
+
+let deep_target = ref<TargetType>({ id: '', indicator: [] })
+// const stop = watch(
+//   props.target,
+//   val => {
+//     console.log('xxxxxxxxxxx')
+//     deep_target.value = val
+//   },
+//   { immediate: true, deep: true }
+// )
+const stop = watchEffect(() => {
+  target_content.value = props.target.content!
+})
 
 onBeforeUnmount(() => {
   stop()
@@ -174,7 +186,7 @@ const foucusInput = function (e: FocusEvent, source: string, i?: number) {
     target = target.parentElement as HTMLElement
   }
   target.classList.add('focus-input')
-  if (typeof i === 'number' && i >= 0) deep_list.obj.indicator[i].isFocused = false
+  if (typeof i === 'number' && i >= 0) deep_target.value.indicator[i].isFocused = false
 }
 
 function blurInput(e: FocusEvent, source: string, i?: number) {
@@ -186,12 +198,12 @@ function blurInput(e: FocusEvent, source: string, i?: number) {
     target = target.parentElement as HTMLElement
   }
   target.classList.remove('focus-input')
-  if (typeof i === 'number' && i >= 0) deep_list.obj.indicator[i].isFocused = true
-  emit('change_content', deep_list.obj)
+  if (typeof i === 'number' && i >= 0) deep_target.value.indicator[i].isFocused = true
+  emit('change_content', target_content, props.index)
 }
 
 function addIndicator() {
-  deep_list.obj.indicator.push({
+  deep_target.value.indicator.push({
     content: '',
     score: 1,
     weigtht: '100%',
@@ -202,5 +214,5 @@ function addIndicator() {
 </script>
 
 <style lang="scss">
-@import './target.scss';
+@use '@/style/target.scss';
 </style>

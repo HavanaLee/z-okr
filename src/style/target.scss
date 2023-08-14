@@ -1,5 +1,5 @@
+@use './main.scss';
 @import './mixins.scss';
-@import './main.scss';
 
 @mixin flex($ai) {
   display: flex !important;

@@ -16,10 +16,11 @@
         <div class="MonthlyObjective_monthly-objective">
           <div class="title"></div>
           <Target
-            v-for="v in target_list"
+            v-for="(v, index) in target_list"
             :key="v.id"
-            :list="v"
-            @change_content="changeTarget"
+            :target="v"
+            :index="index"
+            @change_content="changeTargetContent"
             @delete_target="delete_target"
           ></Target>
         </div>
@@ -67,11 +68,12 @@
 </template>
 
 <script setup lang="ts">
-import target_png from '../assets/target.png'
-import delete_png from '../assets/del.png'
-import Target from '@/components/target.vue'
+import target_png from '@/assets/target.png'
+import delete_png from '@/assets/del.png'
+import Target from '@/views/target'
+import { generateUUID } from '@/utils'
+import type { TargetType } from '@/views/target'
 import { computed, ref } from 'vue'
-import { generateUUID } from '../utils/index'
 
 const target_list = ref<TargetType[]>([])
 let isVisible = ref<boolean>(false)
@@ -79,9 +81,9 @@ let isDeleteTarget = ref<boolean>(false)
 let isDeleteIndex = ref<boolean>(false)
 let delete_id = ref<string>('')
 
-const changeTarget = (val: TargetType) => {
-  const idx = target_list.value.findIndex(e => e.id == val.id)
-  target_list.value.splice(idx, 1, val)
+const changeTargetContent = (val: string, i: number) => {
+  const target = target_list.value[i]
+  target.content = val
 }
 
 const showBtnSubtitle = computed(() => !target_list.value.length)
@@ -109,5 +111,5 @@ const cancel_delete = () => {
 </script>
 
 <style lang="scss" scoped>
-@import './main.scss';
+@import '@/style/main.scss';
 </style>

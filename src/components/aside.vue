@@ -4,10 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {}
-</script>
-
 <style scoped lang="scss">
 .layout_sider {
   width: 262px;

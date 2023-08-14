@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import Aside from '../components/aside.vue'
-import Main from '../components/main.vue'
+import Main from './main'
 </script>
 
 <style scoped lang="scss">

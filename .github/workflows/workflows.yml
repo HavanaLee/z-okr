@@ -49,5 +49,5 @@ jobs:
           # Upload dist repository
           path: './docs'
       - name: Deploy to GitHub Pages
-        run: mv dist docs
-
+        id: deployment
+        uses: actions/deploy-pages@v1

@@ -6,4 +6,3 @@ export type TargetType = {
 }
 
 export type Indicator = Omit<TargetType, 'indicator'> & { weight?: string; isFocused: boolean }
-

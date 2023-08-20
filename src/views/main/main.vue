@@ -21,7 +21,7 @@
             :target="v"
             :index="index"
             @change_content="changeTargetContent"
-            @delete_target="delete_target"
+            @delete_target="delete_Modal"
           ></Target>
         </div>
         <!-- 新增按钮 -->
@@ -73,40 +73,50 @@ import delete_png from '@/assets/del.png'
 import Target from '@/views/target'
 import { generateUUID } from '@/utils'
 import type { TargetType } from '@/views/target'
-import { computed, ref } from 'vue'
+import { dialogInjectionKey } from './constants'
+import type { Source } from './constants'
+import { computed, provide, ref } from 'vue'
 
-const target_list = ref<TargetType[]>([])
-let isVisible = ref<boolean>(false)
 let isDeleteTarget = ref<boolean>(false)
-let isDeleteIndex = ref<boolean>(false)
-let delete_id = ref<string>('')
+let isDeleteIndicator = ref<boolean>(false)
+let delete_tidx = ref<number>(0)
+let delete_idx = ref<number>(0)
+const isVisible = computed({
+  get: () => isDeleteTarget.value || isDeleteIndicator.value,
+  set: val => {
+    if (!val) cancel_delete()
+  }
+})
 
 const changeTargetContent = (val: string, i: number) => {
   const target = target_list.value[i]
   target.content = val
 }
-
+const target_list = ref<TargetType[]>([])
 const showBtnSubtitle = computed(() => !target_list.value.length)
 const addTarget = () => {
   target_list.value.push({ content: '', id: generateUUID(), indicator: [] })
 }
-
-const delete_target = (id: string, source: string) => {
-  source === 'target' ? (isDeleteTarget.value = true) : (isDeleteIndex.value = true)
-  isVisible.value = true
-  delete_id.value = id
+const delete_Modal = (tidx: number, source: Source, idx?: number) => {
+  source === 'target' ? (isDeleteTarget.value = true) : (isDeleteIndicator.value = true)
+  delete_tidx.value = tidx
+  source === 'indicator' && (delete_idx.value = idx!)
 }
+provide(dialogInjectionKey, delete_Modal)
+
+// 删除弹窗的操作
 
 const query_delete = () => {
-  const idx = target_list.value.findIndex(e => e.id == delete_id.value)
-  target_list.value.splice(idx, 1)
-  isVisible.value = false
+  if (!target_list.value.length) return
+  if (isDeleteTarget.value) target_list.value.splice(delete_tidx.value, 1)
+  else target_list.value[delete_tidx.value].indicator.splice(delete_idx.value, 1)
+  cancel_delete()
 }
-
 const cancel_delete = () => {
-  isVisible.value = false
-  isDeleteIndex.value = false
+  isDeleteIndicator.value = false
   isDeleteTarget.value = false
+  delete_idx.value = 0
+  delete_tidx.value = 0
 }
 </script>
 

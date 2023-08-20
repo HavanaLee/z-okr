@@ -37,8 +37,9 @@
       <indicator
         :indicator="v"
         :index="i"
+        :target-idx="index"
         @focus-indicator="foucusInput"
-        @focus-blur="blurInput"
+        @blur-indicator="blurInput"
       ></indicator>
     </div>
     <!-- 操作部分 -->
@@ -85,7 +86,7 @@
           </svg> </span
         >填写进展
       </button>
-      <button class="act_btn" @click="emit('delete_target', deep_target.id)">
+      <button class="act_btn" @click="delTarget">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
             width="1em"
@@ -104,10 +105,11 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, ref, watchEffect } from 'vue'
+import { inject, onBeforeUnmount, ref, watchEffect } from 'vue'
 import { generateUUID } from '@/utils'
 import type { TargetType } from './target'
 import Indicator from '../indicator'
+import { dialogInjectionKey } from '@/views/main'
 
 const props = defineProps({
   target: {
@@ -131,15 +133,16 @@ let deep_target = ref<TargetType>({ id: '', indicator: [] })
 //   { immediate: true, deep: true }
 // )
 const stop = watchEffect(() => {
-  target_content.value = props.target.content!
+  // target_content.value = props.target.content!
+  deep_target.value = props.target
 })
 
 onBeforeUnmount(() => {
   stop()
 })
 
-const emit = defineEmits(['change_content', 'delete_target'])
-
+// 聚焦和失焦部分
+const emit = defineEmits(['change_content'])
 const foucusInput = function (e: FocusEvent, source: string, i?: number) {
   let target = e.target as HTMLElement
   while (
@@ -151,7 +154,6 @@ const foucusInput = function (e: FocusEvent, source: string, i?: number) {
   target.classList.add('focus-input')
   if (typeof i === 'number' && i >= 0) deep_target.value.indicator[i].isFocused = false
 }
-
 function blurInput(e: FocusEvent, source: string, i?: number, val?: string) {
   let target = e.target as HTMLElement
   while (
@@ -168,6 +170,13 @@ function blurInput(e: FocusEvent, source: string, i?: number, val?: string) {
   emit('change_content', target_content, props.index)
 }
 
+// 删除目标
+const openDelDialog = inject(dialogInjectionKey)
+function delTarget() {
+  openDelDialog && openDelDialog(props.index, 'target')
+}
+
+// 操作指标部分
 function addIndicator() {
   deep_target.value.indicator.push({
     content: '',

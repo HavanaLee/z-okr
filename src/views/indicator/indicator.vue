@@ -8,10 +8,10 @@
       resize="none"
       :autosize="true"
       @focus="emit('focus-indicator', $event, 'index', index)"
-      @blur="emit('focus-blur', $event, 'index', index, clone_indicator.content)"
+      @blur="emit('blur-indicator', $event, 'index', index, clone_indicator.content)"
     ></el-input>
     <div class="key_res_act">
-      <div class="key_res_del">
+      <div class="key_res_del" @click="delIndicator">
         <span>
           <svg
             width="1em"
@@ -45,12 +45,18 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue'
+import { inject, ref, watchEffect } from 'vue'
 import type { Indicator } from '../target'
-const props = withDefaults(defineProps<{ indicator: Indicator; index: number }>(), {
-  index: 0
-})
-const emit = defineEmits(['focus-blur', 'focus-indicator'])
+import { dialogInjectionKey } from '@/views/main'
+
+const props = withDefaults(
+  defineProps<{ indicator: Indicator; index: number; targetIdx: number }>(),
+  {
+    index: 0,
+    targetIdx: 0
+  }
+)
+const emit = defineEmits(['blur-indicator', 'focus-indicator', 'del-indicator'])
 let clone_indicator = ref<Indicator>({
   id: '',
   isFocused: false,
@@ -61,4 +67,11 @@ let clone_indicator = ref<Indicator>({
 watchEffect(() => {
   clone_indicator.value = { ...props.indicator }
 })
+
+// 删除指标
+const openDelDialog = inject(dialogInjectionKey)
+const delIndicator = () => {
+  console.log(props.index, 'index')
+  openDelDialog && openDelDialog(props.targetIdx, 'indicator', props.index)
+}
 </script>

@@ -53,4 +53,7 @@ jobs:
         uses: actions/deploy-pages@v1
       - name: List files in docs directory
         run: ls -R docs
-
+      - name: Build and deploy Jekyll site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs

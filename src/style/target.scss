@@ -1,3 +1,4 @@
+@use 'variables' as *;
 @use './main.scss';
 @import './mixins.scss';
 
@@ -248,36 +249,47 @@ $purple: #494bbf;
     }
   }
 
-  // 进展
-  .ObjectProgress {
+  // 进展部分
+  .obj_progress {
     border-bottom: 1px solid #ebecf0;
     margin: 0 16px 0 40px;
     padding: 14px 0 12px;
 
-    .progress_header {
+    .obj_progress_header {
       @include flex(center);
-      font: weight 500px;
+      font-weight: 500;
       font-size: 14px;
       margin-bottom: 5px;
       height: 20px;
       justify-content: flex-start;
 
       .i-icon {
-        height: 16px;
-        line-height: 1;
         margin-right: 8px;
+        color: #494bbf;
+        font-size: 16px;
       }
     }
 
     pre {
       margin-top: 8px;
       margin-bottom: 4px;
-      font-weight: 400;
-      font-size: 14px;
+      color: $okr-text-color-regular;
+      font-family: $okr-font-family;
+      font-size: $okr-font-size-base;
       line-height: 20px;
+      outline: none;
+      text-align: start;
       letter-spacing: normal;
       word-break: break-all;
       white-space: break-spaces;
+    }
+
+    .el-textarea__inner {
+      box-shadow: none !important;
+      padding: 0;
+    }
+    textarea {
+      padding: 0;
     }
   }
 
@@ -315,6 +327,14 @@ $purple: #494bbf;
 
       .btn_span {
         @include act-btn();
+      }
+    }
+    .act_btn_primary {
+      background-color: $purple;
+      color: #fff;
+
+      &:hover {
+        background-color: rgba(73, 75, 191, 0.85);
       }
     }
   }

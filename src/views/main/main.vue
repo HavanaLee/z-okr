@@ -21,6 +21,7 @@
             :target="v"
             :index="index"
             @change_content="changeTargetContent"
+            @change_progress="changeTargetProgress"
             @delete_target="delete_Modal"
           ></Target>
         </div>
@@ -88,9 +89,14 @@ const isVisible = computed({
   }
 })
 
+// 目标列表的操作
 const changeTargetContent = (val: string, i: number) => {
   const target = target_list.value[i]
   target.content = val
+}
+const changeTargetProgress = (val: string, i: number) => {
+  const target = target_list.value[i]
+  target.progress = val
 }
 const target_list = ref<TargetType[]>([])
 const showBtnSubtitle = computed(() => !target_list.value.length)
@@ -105,7 +111,6 @@ const delete_Modal = (tidx: number, source: Source, idx?: number) => {
 provide(dialogInjectionKey, delete_Modal)
 
 // 删除弹窗的操作
-
 const query_delete = () => {
   if (!target_list.value.length) return
   if (isDeleteTarget.value) target_list.value.splice(delete_tidx.value, 1)

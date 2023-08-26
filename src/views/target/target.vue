@@ -38,12 +38,65 @@
         :indicator="v"
         :index="i"
         :target-idx="index"
+        :edit-order="editOrder"
         @focus-indicator="foucusInput"
         @blur-indicator="blurInput"
-      ></indicator>
+      >
+      </indicator>
+    </div>
+    <!-- 进展展示部分 -->
+    <div v-if="deep_target.progress && !editProgress" class="obj_progress">
+      <div class="obj_progress_header">
+        <span role="img" class="i-icon anticon btn_span" style="outline: none">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class=""
+          >
+            <use xlink:href="#tu-icon-describe"></use>
+          </svg>
+        </span>
+        进展
+      </div>
+      <pre @click="fullProgress">{{ deep_target.progress }}</pre>
+    </div>
+    <!-- 进展编辑 -->
+    <div v-if="editProgress" class="obj_progress">
+      <div class="obj_progress_header">
+        <span role="img" class="i-icon anticon btn_span" style="outline: none">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class=""
+          >
+            <use xlink:href="#tu-icon-describe"></use>
+          </svg>
+        </span>
+        进展
+      </div>
+      <el-input
+        ref="progressInput"
+        v-model="copyProgress"
+        type="textarea"
+        maxlength="500"
+        :rows="8"
+        resize="none"
+        placeholder="填写进展，按 Ctrl + Enter 键保存"
+        @blur="saveProgress"
+      ></el-input>
+    </div>
+    <div v-if="editProgress" class="obj_action">
+      <button class="act_btn act_btn_primary" @click="saveProgress">保存</button>
+      <button class="act_btn" @mousedown.stop="cancelEditProgress">取消</button>
     </div>
     <!-- 操作部分 -->
-    <div class="obj_action">
+    <div v-else class="obj_action">
       <button class="act_btn" @click="addIndicator">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
@@ -58,7 +111,7 @@
           </svg> </span
         >添加指标
       </button>
-      <button class="act_btn">
+      <button class="act_btn" @click="editOrder = !editOrder">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
             width="1em"
@@ -70,9 +123,9 @@
           >
             <use xlink:href="#tu-icon-genggaizhibiaoshunxu" />
           </svg> </span
-        >更换指标顺序
+        >{{ editOrder ? '保存指标顺序' : '更换指标顺序' }}
       </button>
-      <button class="act_btn">
+      <button class="act_btn" @click="fullProgress">
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
             width="1em"
@@ -105,7 +158,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onBeforeUnmount, ref, watchEffect } from 'vue'
+import { inject, nextTick, onBeforeUnmount, ref, unref, watchEffect } from 'vue'
 import { generateUUID } from '@/utils'
 import type { TargetType } from './target'
 import Indicator from '../indicator'
@@ -124,16 +177,8 @@ const props = defineProps({
 const target_content = ref('')
 
 let deep_target = ref<TargetType>({ id: '', indicator: [] })
-// const stop = watch(
-//   props.target,
-//   val => {
-//     console.log('xxxxxxxxxxx')
-//     deep_target.value = val
-//   },
-//   { immediate: true, deep: true }
-// )
 const stop = watchEffect(() => {
-  // target_content.value = props.target.content!
+  target_content.value = props.target.content!
   deep_target.value = props.target
 })
 
@@ -142,7 +187,7 @@ onBeforeUnmount(() => {
 })
 
 // 聚焦和失焦部分
-const emit = defineEmits(['change_content'])
+const emit = defineEmits(['change_content', 'change_progress'])
 const foucusInput = function (e: FocusEvent, source: string, i?: number) {
   let target = e.target as HTMLElement
   while (
@@ -170,6 +215,30 @@ function blurInput(e: FocusEvent, source: string, i?: number, val?: string) {
   emit('change_content', target_content, props.index)
 }
 
+// 进展部分
+const progressInput = ref(null as unknown as HTMLElement)
+const editProgress = ref(false)
+const copyProgress = ref('')
+// 编辑进展
+const fullProgress = () => {
+  copyProgress.value = unref(deep_target.value.progress) || ''
+  editProgress.value = true
+  nextTick(() => {
+    const input = progressInput.value as HTMLElement
+    input.focus()
+  })
+}
+// 取消编辑进展
+const cancelEditProgress = () => {
+  editProgress.value = false
+  copyProgress.value = deep_target.value.progress || ''
+}
+// 保存进展
+const saveProgress = () => {
+  editProgress.value = false
+  emit('change_progress', unref(copyProgress), props.index)
+}
+
 // 删除目标
 const openDelDialog = inject(dialogInjectionKey)
 function delTarget() {
@@ -177,6 +246,7 @@ function delTarget() {
 }
 
 // 操作指标部分
+const editOrder = ref(false)
 function addIndicator() {
   deep_target.value.indicator.push({
     content: '',

@@ -2,6 +2,7 @@ export type TargetType = {
   content?: string
   id: string
   score?: number
+  progress?: string
   indicator: Indicator[]
 }
 

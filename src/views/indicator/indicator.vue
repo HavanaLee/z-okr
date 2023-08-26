@@ -10,7 +10,8 @@
       @focus="emit('focus-indicator', $event, 'index', index)"
       @blur="emit('blur-indicator', $event, 'index', index, clone_indicator.content)"
     ></el-input>
-    <div class="key_res_act">
+    <!-- 指标操作部分 -->
+    <div v-if="!editOrder" class="key_res_act">
       <div class="key_res_del" @click="delIndicator">
         <span>
           <svg
@@ -42,6 +43,68 @@
       </div>
       <!-- <div class="key_res_score"></div> -->
     </div>
+    <!-- 更换指标顺序 -->
+    <div v-else class="key_res_act">
+      <div class="KeyResultRow_key-result-order__2bTBb KeyResultRow_disabled__3wUDN">
+        <span role="img" class="anticon" style="outline: none">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class=""
+          >
+            <use xlink:href="#tu-icon-daoding"></use>
+          </svg>
+        </span>
+      </div>
+
+      <div class="KeyResultRow_key-result-order__2bTBb KeyResultRow_disabled__3wUDN">
+        <span role="img" class="anticon" style="outline: none">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class=""
+          >
+            <use xlink:href="#tu-icon-up"></use>
+          </svg>
+        </span>
+      </div>
+
+      <div class="KeyResultRow_key-result-order__2bTBb">
+        <span role="img" class="anticon" style="outline: none">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class=""
+          >
+            <use xlink:href="#tu-icon-down"></use>
+          </svg>
+        </span>
+      </div>
+
+      <div class="KeyResultRow_key-result-order__2bTBb">
+        <span role="img" class="anticon" style="outline: none">
+          <svg
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            class=""
+          >
+            <use xlink:href="#tu-icon-intheend"></use>
+          </svg>
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -50,7 +113,7 @@ import type { Indicator } from '../target'
 import { dialogInjectionKey } from '@/views/main'
 
 const props = withDefaults(
-  defineProps<{ indicator: Indicator; index: number; targetIdx: number }>(),
+  defineProps<{ indicator: Indicator; index: number; targetIdx: number; editOrder: boolean }>(),
   {
     index: 0,
     targetIdx: 0

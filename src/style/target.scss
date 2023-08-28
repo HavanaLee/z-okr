@@ -14,6 +14,15 @@
 }
 
 $purple: #494bbf;
+.key_res_order_allow {
+  color: $allow-color !important;
+  cursor: pointer !important;
+}
+
+.key_res_order_not {
+  color: $not-allow-color !important;
+  cursor: not-allowed !important;
+}
 
 .anticon {
   display: inline-block;
@@ -132,17 +141,7 @@ $purple: #494bbf;
       }
 
       .key_res_order {
-        @include flex(flex-start);
-
-        .key_res_order_allow {
-          color: #333;
-          cursor: pointer;
-        }
-
-        .key_res_order_not {
-          color: gray;
-          cursor: not-allowed;
-        }
+        @include flex(center);
 
         .i-icon {
           margin-left: 16px;
@@ -310,16 +309,12 @@ $purple: #494bbf;
       padding: 0 16px;
       border-radius: 4px;
       font-size: 14px;
-      color: #fff;
       transition:
         background-color 0.3s,
         border-color 0.3s;
       border: 1px solid hsla(0, 0%, 80%, 0.7);
       background-color: #fff;
-      color: rgba(0, 0, 0, 0.85);
-      cursor: pointer;
       margin-right: 12px;
-      color: #333;
 
       &:hover {
         background-color: hsla(0, 0%, 80%, 0.1);

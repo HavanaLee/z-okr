@@ -44,8 +44,13 @@
       <!-- <div class="key_res_score"></div> -->
     </div>
     <!-- 更换指标顺序 -->
-    <div v-else class="key_res_act">
-      <div class="KeyResultRow_key-result-order__2bTBb KeyResultRow_disabled__3wUDN">
+    <div v-else class="key_res_order">
+      <div
+        v-for="item in orderActs"
+        :key="item.icon"
+        :class="[item.disabled ? 'key_res_order_not' : 'key_res_order_allow', 'i-icon']"
+        @click="item.fn"
+      >
         <span role="img" class="anticon" style="outline: none">
           <svg
             width="1em"
@@ -55,52 +60,7 @@
             focusable="false"
             class=""
           >
-            <use xlink:href="#tu-icon-daoding"></use>
-          </svg>
-        </span>
-      </div>
-
-      <div class="KeyResultRow_key-result-order__2bTBb KeyResultRow_disabled__3wUDN">
-        <span role="img" class="anticon" style="outline: none">
-          <svg
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            class=""
-          >
-            <use xlink:href="#tu-icon-up"></use>
-          </svg>
-        </span>
-      </div>
-
-      <div class="KeyResultRow_key-result-order__2bTBb">
-        <span role="img" class="anticon" style="outline: none">
-          <svg
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            class=""
-          >
-            <use xlink:href="#tu-icon-down"></use>
-          </svg>
-        </span>
-      </div>
-
-      <div class="KeyResultRow_key-result-order__2bTBb">
-        <span role="img" class="anticon" style="outline: none">
-          <svg
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            class=""
-          >
-            <use xlink:href="#tu-icon-intheend"></use>
+            <use :xlink:href="item.icon"></use>
           </svg>
         </span>
       </div>
@@ -108,18 +68,24 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { inject, ref, watchEffect } from 'vue'
-import type { Indicator } from '../target'
+import { computed, inject, ref, watchEffect } from 'vue'
+import type { Indicator, TargetType } from '../target'
 import { dialogInjectionKey } from '@/views/main'
 
 const props = withDefaults(
-  defineProps<{ indicator: Indicator; index: number; targetIdx: number; editOrder: boolean }>(),
+  defineProps<{
+    indicator: Indicator
+    index: number
+    targetIdx: number
+    target: TargetType
+    editOrder: boolean
+  }>(),
   {
     index: 0,
     targetIdx: 0
   }
 )
-const emit = defineEmits(['blur-indicator', 'focus-indicator', 'del-indicator'])
+const emit = defineEmits(['blur-indicator', 'focus-indicator', 'order-indicator'])
 let clone_indicator = ref<Indicator>({
   id: '',
   isFocused: false,
@@ -129,6 +95,50 @@ let clone_indicator = ref<Indicator>({
 })
 watchEffect(() => {
   clone_indicator.value = { ...props.indicator }
+})
+
+// 更换指标顺序
+const isLast = computed(() => {
+  return props.index === props.target.indicator.length - 1
+})
+const isFirst = computed(() => {
+  return props.index === 0
+})
+const orderActs = computed(() => {
+  return [
+    {
+      name: '置顶',
+      icon: '#tu-icon-daoding',
+      disabled: isFirst.value,
+      fn: () => {
+        emit('order-indicator', 'top', props.index)
+      }
+    },
+    {
+      name: '上移',
+      icon: '#tu-icon-up',
+      disabled: isFirst.value,
+      fn: () => {
+        emit('order-indicator', 'up', props.index)
+      }
+    },
+    {
+      name: '下移',
+      icon: '#tu-icon-down',
+      disabled: isLast.value,
+      fn: () => {
+        emit('order-indicator', 'down', props.index)
+      }
+    },
+    {
+      name: '置底',
+      icon: '#tu-icon-intheend',
+      disabled: isLast.value,
+      fn: () => {
+        emit('order-indicator', 'bottom', props.index)
+      }
+    }
+  ]
 })
 
 // 删除指标

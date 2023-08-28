@@ -38,9 +38,11 @@
         :indicator="v"
         :index="i"
         :target-idx="index"
+        :target="deep_target"
         :edit-order="editOrder"
         @focus-indicator="foucusInput"
         @blur-indicator="blurInput"
+        @order-indicator="operateIndicator"
       >
       </indicator>
     </div>
@@ -97,7 +99,10 @@
     </div>
     <!-- 操作部分 -->
     <div v-else class="obj_action">
-      <button class="act_btn" @click="addIndicator">
+      <button
+        :class="['act_btn', editOrder ? 'key_res_order_not' : 'key_res_order_allow']"
+        @click="addIndicator"
+      >
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
             width="1em"
@@ -111,7 +116,15 @@
           </svg> </span
         >添加指标
       </button>
-      <button class="act_btn" @click="editOrder = !editOrder">
+      <button
+        :class="['act_btn', !canOrderIndicator ? 'key_res_order_not' : 'key_res_order_allow']"
+        @click="
+          () => {
+            if (!canOrderIndicator) return
+            editOrder = !editOrder
+          }
+        "
+      >
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
             width="1em"
@@ -125,7 +138,10 @@
           </svg> </span
         >{{ editOrder ? '保存指标顺序' : '更换指标顺序' }}
       </button>
-      <button class="act_btn" @click="fullProgress">
+      <button
+        :class="['act_btn', editOrder ? 'key_res_order_not' : 'key_res_order_allow']"
+        @click="fullProgress"
+      >
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
             width="1em"
@@ -139,7 +155,10 @@
           </svg> </span
         >填写进展
       </button>
-      <button class="act_btn" @click="delTarget">
+      <button
+        :class="['act_btn', editOrder ? 'key_res_order_not' : 'key_res_order_allow']"
+        @click="delTarget"
+      >
         <span role="img" class="i-icon-target anticon btn_span" style="outline: none">
           <svg
             width="1em"
@@ -158,7 +177,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, nextTick, onBeforeUnmount, ref, unref, watchEffect } from 'vue'
+import { computed, inject, nextTick, onBeforeUnmount, ref, unref, watchEffect } from 'vue'
 import { generateUUID } from '@/utils'
 import type { TargetType } from './target'
 import Indicator from '../indicator'
@@ -221,6 +240,7 @@ const editProgress = ref(false)
 const copyProgress = ref('')
 // 编辑进展
 const fullProgress = () => {
+  if (editOrder.value) return
   copyProgress.value = unref(deep_target.value.progress) || ''
   editProgress.value = true
   nextTick(() => {
@@ -242,12 +262,40 @@ const saveProgress = () => {
 // 删除目标
 const openDelDialog = inject(dialogInjectionKey)
 function delTarget() {
+  if (editOrder.value) return
   openDelDialog && openDelDialog(props.index, 'target')
 }
 
 // 操作指标部分
 const editOrder = ref(false)
+const canOrderIndicator = computed(() => deep_target.value.indicator.length > 1)
+const operateIndicator = (action: string, i: number) => {
+  if (!editOrder.value || !canOrderIndicator.value) return
+  switch (action) {
+    case 'up': {
+      let up = deep_target.value.indicator.splice(i, 1)
+      deep_target.value.indicator.splice(i - 1, 0, up[0])
+      break
+    }
+    case 'top': {
+      let top = deep_target.value.indicator.splice(i, 1)
+      deep_target.value.indicator.unshift(top[0])
+      break
+    }
+    case 'down': {
+      let down = deep_target.value.indicator.splice(i, 1)
+      deep_target.value.indicator.splice(i + 1, 0, down[0])
+      break
+    }
+    case 'bottom': {
+      let bottom = deep_target.value.indicator.splice(i, 1)
+      deep_target.value.indicator.push(bottom[0])
+      break
+    }
+  }
+}
 function addIndicator() {
+  if (editOrder.value) return
   deep_target.value.indicator.push({
     content: '',
     score: 1,

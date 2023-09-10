@@ -1,9 +1,9 @@
 export type TargetType = {
   content?: string
   id: string
-  score?: number
+  score?: string
   progress?: string
   indicator: Indicator[]
 }
 
-export type Indicator = Omit<TargetType, 'indicator'> & { weight?: string; isFocused: boolean }
+export type Indicator = Omit<TargetType, 'indicator'> & { weight: string; isFocused: boolean }

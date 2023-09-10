@@ -43,6 +43,8 @@
         @focus-indicator="foucusInput"
         @blur-indicator="blurInput"
         @order-indicator="operateIndicator"
+        @change-score="changeScore"
+        @open-modal="openWeightModal"
       >
       </indicator>
     </div>
@@ -174,6 +176,7 @@
       </button>
     </div>
   </div>
+  <weight-modal v-model:visible="modalVisible"></weight-modal>
 </template>
 
 <script setup lang="ts">
@@ -182,6 +185,7 @@ import { generateUUID } from '@/utils'
 import type { TargetType } from './target'
 import Indicator from '../indicator'
 import { dialogInjectionKey } from '@/views/main'
+import WeightModal from './indicatorWeightModal.vue'
 
 const props = defineProps({
   target: {
@@ -294,15 +298,36 @@ const operateIndicator = (action: string, i: number) => {
     }
   }
 }
+
+const changeScore = (score: string, i: number) => {
+  deep_target.value.indicator[i].score = score
+}
 function addIndicator() {
   if (editOrder.value) return
+  const weight = unref(calcNewWeight())
   deep_target.value.indicator.push({
     content: '',
-    score: 1,
-    weight: '100%',
+    score: '1',
+    weight,
     id: generateUUID(),
     isFocused: true
   })
+}
+// 所有指标的权重相加=100%，新添加的指标权重=上一个指标的权重 / 2
+const calcNewWeight = () => {
+  const len = deep_target.value.indicator.length
+  if (len === 0) return '100.00%'
+  const lastWeight = deep_target.value.indicator[len - 1].weight
+  const lastWeightNum = Number(lastWeight.slice(0, lastWeight.length - 1))
+  const newWeight = (lastWeightNum / 2).toFixed(2) + '%'
+  deep_target.value.indicator[len - 1].weight = newWeight
+  return newWeight
+}
+
+// 权重弹窗
+const modalVisible = ref(false)
+const openWeightModal = () => {
+  modalVisible.value = true
 }
 </script>
 

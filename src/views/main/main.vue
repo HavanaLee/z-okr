@@ -1,6 +1,6 @@
 <template>
   <div class="layout_main">
-    <header></header>
+    <header class="main_header"></header>
     <div class="layout_siderbar-trigger"></div>
     <div class="CustomPageTitle">
       <img :src="target_png" />
@@ -22,7 +22,6 @@
             :index="index"
             @change_content="changeTargetContent"
             @change_progress="changeTargetProgress"
-            @delete_target="delete_Modal"
           ></Target>
         </div>
         <!-- 新增按钮 -->
@@ -114,7 +113,7 @@ provide(dialogInjectionKey, delete_Modal)
 const query_delete = () => {
   if (!target_list.value.length) return
   if (isDeleteTarget.value) target_list.value.splice(delete_tidx.value, 1)
-  else target_list.value[delete_tidx.value].indicator.splice(delete_idx.value, 1)
+  else delIndicator()
   cancel_delete()
 }
 const cancel_delete = () => {
@@ -122,6 +121,25 @@ const cancel_delete = () => {
   isDeleteTarget.value = false
   delete_idx.value = 0
   delete_tidx.value = 0
+}
+const delIndicator = () => {
+  const indicator = target_list.value[delete_tidx.value].indicator
+  if (indicator.length !== 1) {
+    if (delete_idx.value === 0) {
+      indicator[delete_idx.value + 1].weight =
+        (
+          Number(indicator[delete_idx.value + 1].weight.slice(0, -1)) +
+          Number(indicator[delete_idx.value].weight.slice(0, -1))
+        ).toFixed(2) + '%'
+    } else {
+      indicator[delete_idx.value - 1].weight =
+        (
+          Number(indicator[delete_idx.value - 1].weight.slice(0, -1)) +
+          Number(indicator[delete_idx.value].weight.slice(0, -1))
+        ).toFixed(2) + '%'
+    }
+  }
+  indicator.splice(delete_idx.value, 1)
 }
 </script>
 

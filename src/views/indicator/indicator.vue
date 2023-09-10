@@ -26,7 +26,7 @@
           </svg>
         </span>
       </div>
-      <div v-show="clone_indicator.isFocused" class="key_res_weight">
+      <div v-show="clone_indicator.isFocused" class="key_res_weight" @click="openWeightModal">
         <span>
           <svg
             width="1em"
@@ -41,7 +41,11 @@
         </span>
         <span>{{ clone_indicator.weight }}</span>
       </div>
-      <!-- <div class="key_res_score"></div> -->
+      <div v-show="clone_indicator.isFocused" class="key_res_score">
+        <div class="score_input">
+          <input v-model="clone_indicator.score" type="text" @input="validateInput" />
+        </div>
+      </div>
     </div>
     <!-- 更换指标顺序 -->
     <div v-else class="key_res_order">
@@ -85,13 +89,19 @@ const props = withDefaults(
     targetIdx: 0
   }
 )
-const emit = defineEmits(['blur-indicator', 'focus-indicator', 'order-indicator'])
+const emit = defineEmits([
+  'blur-indicator',
+  'focus-indicator',
+  'order-indicator',
+  'change-score',
+  'open-modal'
+])
 let clone_indicator = ref<Indicator>({
   id: '',
   isFocused: false,
   weight: '',
   content: '',
-  score: 0
+  score: ''
 })
 watchEffect(() => {
   clone_indicator.value = { ...props.indicator }
@@ -146,5 +156,25 @@ const openDelDialog = inject(dialogInjectionKey)
 const delIndicator = () => {
   console.log(props.index, 'index')
   openDelDialog && openDelDialog(props.targetIdx, 'indicator', props.index)
+}
+
+// 权重输入框校验
+const validateInput = (e: Event) => {
+  const regex = /^(0(\.\d{0,1})?|1(\.0)?)$/ // 0-1之间的小数，最多一位小数
+  const target = e.target as HTMLInputElement
+
+  let inputValue = target.value
+  if (!regex.test(inputValue)) {
+    // 如果输入不合法，删除掉最后一位
+    // 如果输入不合法，删除掉最后一位字符
+    inputValue = inputValue.slice(0, -1)
+    // 将结果设置回输入框
+    clone_indicator.value.score = inputValue
+    emit('change-score', inputValue, props.index)
+  }
+}
+// 激活权重弹窗
+const openWeightModal = () => {
+  emit('open-modal', props.index)
 }
 </script>

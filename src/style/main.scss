@@ -174,6 +174,7 @@ body {
 
   .el-dialog__footer {
     padding: 0 32px 32px;
+    display: flex;
 
     .el-button {
       display: inline-flex;
@@ -185,19 +186,28 @@ body {
       min-width: 88px;
       padding: 0 16px;
       border-radius: 4px;
-      background-color: #494bbf;
       font-size: 14px;
-      color: #fff;
       transition:
         background-color 0.3s,
         border-color 0.3s;
       cursor: pointer;
     }
 
-    .el-button--default {
+    .el-button {
       border: 1px solid hsla(0, 0%, 80%, 0.7);
       background-color: #fff;
       color: rgba(0, 0, 0, 0.85);
+      &:hover {
+        background-color: hsla(0, 0%, 80%, 0.1);
+      }
+    }
+    .el-button--primary {
+      border: 1px solid hsla(0, 0%, 80%, 0.7);
+      background-color: #494bbf;
+      color: #fff;
+      &:hover {
+        background-color: rgba(73, 75, 191, 0.85);
+      }
     }
   }
 

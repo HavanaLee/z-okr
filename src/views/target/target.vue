@@ -176,7 +176,11 @@
       </button>
     </div>
   </div>
-  <weight-modal v-model:visible="modalVisible"></weight-modal>
+  <weight-modal
+    :id="deep_target.id"
+    v-model:visible="modalVisible"
+    :indicator="deep_target.indicator"
+  ></weight-modal>
 </template>
 
 <script setup lang="ts">
@@ -199,7 +203,12 @@ const props = defineProps({
 })
 const target_content = ref('')
 
-let deep_target = ref<TargetType>({ id: '', indicator: [] })
+let deep_target = ref<TargetType>({
+  content: '',
+  indicator: [],
+  progress: '',
+  id: ''
+})
 const stop = watchEffect(() => {
   target_content.value = props.target.content!
   deep_target.value = props.target

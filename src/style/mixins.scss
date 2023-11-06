@@ -1,3 +1,11 @@
+@mixin primary-disabled {
+  color: #fff;
+  cursor: not-allowed;
+  background-image: none;
+  background-color: #a0cfff;
+  border-color: #a0cfff;
+}
+
 @mixin line-limit($line) {
   display: -webkit-box;
   -webkit-line-clamp: $line;

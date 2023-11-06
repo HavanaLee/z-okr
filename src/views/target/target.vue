@@ -187,9 +187,10 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, onBeforeUnmount, ref, unref, watchEffect } from 'vue'
 import { generateUUID } from '@/utils'
-import type { Indicator, TargetType, WeightList } from './target'
+import type { TargetType, WeightList } from './target'
 import { dialogInjectionKey } from '@/views/main'
 import WeightModal from './indicatorWeightModal.vue'
+import indicator from '../indicator'
 
 const props = defineProps({
   target: {

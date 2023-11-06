@@ -21,7 +21,7 @@
               <el-input
                 v-model="item.weight"
                 :formatter="formatterValue"
-                :parser="parserValue"
+                :parser="formatterValue"
               ></el-input>
             </div>
             %
@@ -39,7 +39,7 @@
       </div>
       <div class="footer-right">
         <el-button @click="closeModal">取 消</el-button>
-        <el-button type="primary" @click="ok">确 定</el-button>
+        <el-button type="primary" :disabled="!!remainWight" @click="ok">确 定</el-button>
       </div>
     </template>
   </el-dialog>
@@ -101,18 +101,19 @@ const formatterValue = (e: string) => {
   if (!regex.test(e)) e = e.slice(0, e.length - 1)
   return e
 }
-const parserValue = (e: string) => {
-  let value = formatterValue(e)
-  if (value.charAt(value.length - 1) === '.') value = value.slice(0, value.length - 1)
-  return value + '%'
-}
 
 const closeModal = () => {
   copyIndicator()
   visibility.value = false
 }
 const ok = () => {
-  emit('updateWeight', weightList)
+  const map = weightList.value.map(e => {
+    let weight = e.weight
+    if (weight.charAt(weight.length - 1) === '.') weight = weight.slice(0, weight.length - 1)
+    weight = Number(weight).toFixed(2) + '%'
+    return { ...e, weight }
+  })
+  emit('updateWeight', map)
   visibility.value = false
 }
 </script>

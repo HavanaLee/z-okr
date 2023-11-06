@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'mixins' as *;
 body {
   font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Helvetica, sans-serif !important;
 
@@ -213,6 +214,12 @@ body {
       color: #fff;
       &:hover {
         background-color: rgba(73, 75, 191, 0.85);
+      }
+    }
+    .is-disabled {
+      @include primary-disabled();
+      &:hover {
+        @include primary-disabled();
       }
     }
   }

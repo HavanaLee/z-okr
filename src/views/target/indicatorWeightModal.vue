@@ -30,19 +30,7 @@
         <div class="result-item-content">{{ item.content }}</div>
       </div>
     </div>
-    <template #footer>
-      <div class="footer-left">
-        <div class="weight-total">
-          {{ totalWeight }}
-          <span v-if="remainWight" class="weight-error">{{ remainWight }}</span>
-        </div>
-      </div>
-      <div class="footer-right">
-        <el-button @click="closeModal">取 消</el-button>
-        <el-button type="primary" @click="ok">确 定</el-button>
-      </div>
-    </template>
-  </el-dialog>
+
 </template>
 <script setup lang="ts">
 import { computed, watchEffect, ref } from 'vue'
@@ -68,6 +56,7 @@ const visibility = computed({
 })
 // 拷贝一份数据，防止直接修改原数据
 const weightList = ref<WeightList[]>([])
+
 function copyIndicator() {
   weightList.value = props.indicator.map(item => {
     return {
@@ -106,12 +95,16 @@ const parserValue = (e: string) => {
   return value + '%'
 }
 
+
 const closeModal = () => {
   copyIndicator()
   visibility.value = false
 }
 const ok = () => {
   emit('updateWeight', weightList)
+  visibility.value = false
+}
+const ok = () => {
   visibility.value = false
 }
 </script>
@@ -196,7 +189,6 @@ const ok = () => {
   color: #f33;
   margin-left: 8px;
   position: relative;
-
   &::before {
     content: ',';
     color: #999;

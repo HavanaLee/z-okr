@@ -181,6 +181,7 @@
     v-model:visible="modalVisible"
     :indicator="deep_target.indicator"
     @update-weight="updateWeight"
+
   ></weight-modal>
 </template>
 

@@ -1,3 +1,4 @@
+@use 'variables' as *;
 body {
   font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Helvetica, sans-serif !important;
 
@@ -175,7 +176,11 @@ body {
   .el-dialog__footer {
     padding: 0 32px 32px;
     display: flex;
-
+    justify-content: space-between;
+    align-items: center;
+    .footer-left {
+      color: $gray-color;
+    }
     .el-button {
       display: inline-flex;
       justify-content: center;

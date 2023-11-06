@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
+    "build:github": "vite build --mode github",
     "lint:eslint": "eslint --fix --cache  --ext .js,.ts,.tsx ./src ",
     "postinstall": "npx husky install",
     "preview": "vite preview"

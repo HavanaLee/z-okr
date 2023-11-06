@@ -59,6 +59,7 @@
       </div>
     </div>
     <template #footer>
+      <span></span>
       <span class="dialog-footer">
         <el-button @click="cancel_delete">否</el-button>
         <el-button type="primary" @click="query_delete">是</el-button>

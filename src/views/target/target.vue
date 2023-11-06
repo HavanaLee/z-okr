@@ -339,10 +339,11 @@ const openWeightModal = () => {
   modalVisible.value = true
 }
 const updateWeight = (list: WeightList[]) => {
-  deep_target.value.indicator = deep_target.value.indicator.reduce((pre, cur) => {
-    const weight = list.filter(v => cur.id === v.id)
-    return weight.length ? [...pre, Object.assign(cur, { weight: weight[0].weight })] : [...pre]
-  }, [])
+  const map = deep_target.value.indicator.map(e => {
+    const weight = list.filter(v => e.id === v.id)
+    return { ...e, weight: weight[0].weight }
+  })
+  deep_target.value.indicator = map
 }
 </script>
 

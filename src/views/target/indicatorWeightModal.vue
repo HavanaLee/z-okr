@@ -68,6 +68,7 @@ const visibility = computed({
 })
 // 拷贝一份数据，防止直接修改原数据
 const weightList = ref<WeightList[]>([])
+
 function copyIndicator() {
   weightList.value = props.indicator.map(item => {
     return {
@@ -196,7 +197,6 @@ const ok = () => {
   color: #f33;
   margin-left: 8px;
   position: relative;
-
   &::before {
     content: ',';
     color: #999;

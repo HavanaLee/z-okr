@@ -181,16 +181,16 @@
     v-model:visible="modalVisible"
     :indicator="deep_target.indicator"
     @update-weight="updateWeight"
-
   ></weight-modal>
 </template>
 
 <script setup lang="ts">
 import { computed, inject, nextTick, onBeforeUnmount, ref, unref, watchEffect } from 'vue'
 import { generateUUID } from '@/utils'
-import type { Indicator, TargetType, WeightList } from './target'
+import type { TargetType, WeightList } from './target'
 import { dialogInjectionKey } from '@/views/main'
 import WeightModal from './indicatorWeightModal.vue'
+import indicator from '../indicator'
 
 const props = defineProps({
   target: {
@@ -340,10 +340,11 @@ const openWeightModal = () => {
   modalVisible.value = true
 }
 const updateWeight = (list: WeightList[]) => {
-  deep_target.value.indicator = deep_target.value.indicator.reduce((pre, cur) => {
-    const weight = list.filter(v => cur.id === v.id)
-    return weight.length ? [...pre, Object.assign(cur, { weight: weight[0].weight })] : [...pre]
-  }, [])
+  const map = deep_target.value.indicator.map(e => {
+    const weight = list.filter(v => e.id === v.id)
+    return { ...e, weight: weight[0].weight }
+  })
+  deep_target.value.indicator = map
 }
 </script>
 
